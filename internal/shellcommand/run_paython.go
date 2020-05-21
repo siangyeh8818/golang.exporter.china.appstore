@@ -7,7 +7,7 @@ import (
 	config "github.com/siangyeh8818/golang.exporter.china.appstore/internal/config"
 )
 
-func callpython() {
+func Callpython() {
 
 	config := config.BaseConfig
 	config.InitConfig()

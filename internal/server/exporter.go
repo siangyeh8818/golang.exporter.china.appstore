@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	//"os"
 
@@ -63,7 +64,7 @@ func NewExporter(metricsPrefix string) *Exporter {
 			[]string{"myLabel"})
 	*/
 	return &Exporter{
-		download_quota: gauge_metrics1,
+		download_quota: download_quota,
 		//gaugeVec: gaugeVec,
 	}
 }
@@ -78,10 +79,13 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 
 func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 	e.download_quota.Describe(ch)
-	e.gauge_metrics2.Describe(ch)
 }
 
 func GetCsvContent(filepath string) float64 {
+	for !Exists(filepath) {
+		fmt.Println("-----wait for apple_download.py to write output.csv'")
+		time.Sleep(1)
+	}
 
 	fin, err := os.Open(filepath)
 	if err != nil {
@@ -94,8 +98,20 @@ func GetCsvContent(filepath string) float64 {
 		panic(err)
 	}
 	fmt.Println(string(bytes))
-	downloadcount, err = strconv.ParseFloat(string(bytes), 64)
+	downloadcount, err := strconv.ParseFloat(string(bytes), 64)
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println("------downloadcount------")
 	fmt.Println(downloadcount)
 	return downloadcount
+}
+
+func Exists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
 }

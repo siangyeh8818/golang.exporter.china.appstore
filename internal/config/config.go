@@ -8,12 +8,12 @@ type BaseConfig struct {
 	APPLE_PASSWORD        string
 }
 
-func (baseCfg *BaseConfig) InitConfig(configPath string) {
+func (baseCfg *BaseConfig) InitConfig() {
 
-	baseCfg.CRAWLER_INTERNAL_TIME, err = os.Getenv("CRAWLER_INTERNAL_TIME")
+	baseCfg.CRAWLER_INTERNAL_TIME = os.Getenv("CRAWLER_INTERNAL_TIME")
 
-	baseCfg.APPLE_ACCOUNT, err = os.Getenv("APPLE_ACCOUNT")
+	baseCfg.APPLE_ACCOUNT = os.Getenv("APPLE_ACCOUNT")
 
-	baseCfg.APPLE_PASSWORD, err = os.Getenv("APPLE_PASSWORD")
+	baseCfg.APPLE_PASSWORD = os.Getenv("APPLE_PASSWORD")
 
 }

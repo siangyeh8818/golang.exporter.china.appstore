@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	//"os"
@@ -22,7 +23,7 @@ type Exporter struct {
 
 func Run_Exporter_Server() {
 	log.Println(`
-  This is a prometheus exporter for nats-streaming
+  This is a prometheus exporter for apple store
   Access: http://127.0.0.1:8081
   `)
 
@@ -84,7 +85,7 @@ func (e *Exporter) Describe(ch chan<- *prometheus.Desc) {
 func GetCsvContent(filepath string) float64 {
 	for !Exists(filepath) {
 		fmt.Println("-----wait for apple_download.py to write output.csv'")
-		time.Sleep(1)
+		time.Sleep(1 * time.Second)
 	}
 
 	fin, err := os.Open(filepath)
@@ -97,8 +98,13 @@ func GetCsvContent(filepath string) float64 {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(string(bytes))
-	downloadcount, err := strconv.ParseFloat(string(bytes), 64)
+	csccontent := string(bytes)
+	fmt.Println(csccontent)
+	csccontent = strings.Replace(csccontent, ",", "", -1)
+	csccontent = strings.Replace(csccontent, "\n", "", -1)
+	csccontent = strings.Replace(csccontent, "\r", "", -1)
+	csccontent = strings.Trim(csccontent, "\"")
+	downloadcount, err := strconv.ParseFloat(csccontent, 64)
 	if err != nil {
 		panic(err)
 	}

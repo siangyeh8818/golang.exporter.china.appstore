@@ -1,4 +1,4 @@
-package exporter
+package server
 
 import (
 	"fmt"
@@ -53,8 +53,8 @@ func Run_Exporter_Server() {
 func NewExporter(metricsPrefix string) *Exporter {
 	download_quota := prometheus.NewGauge(prometheus.GaugeOpts{
 		Namespace: metricsPrefix,
-		Name:      "metrics1",
-		Help:      "This is a gauge metric example"})
+		Name:      "download_quota",
+		Help:      "This is a gauge metric"})
 	/*
 		gaugeVec := *prometheus.NewGaugeVec(prometheus.GaugeOpts{
 			Namespace: metricsPrefix,
@@ -63,15 +63,14 @@ func NewExporter(metricsPrefix string) *Exporter {
 			[]string{"myLabel"})
 	*/
 	return &Exporter{
-		gauge_metrics1: gauge_metrics1,
-		gauge_metrics2: gauge_metrics2,
+		download_quota: gauge_metrics1,
 		//gaugeVec: gaugeVec,
 	}
 }
 
 func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 
-	e.download_quota.Set(GetCsvContent("/rooot/output.csv"))
+	e.download_quota.Set(GetCsvContent("/root/output.csv"))
 	e.download_quota.Collect(ch)
 }
 

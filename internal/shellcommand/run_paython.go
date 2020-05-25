@@ -2,6 +2,7 @@ package shellcommand
 
 import (
 	"log"
+	"os"
 	"time"
 
 	configs "github.com/siangyeh8818/golang.exporter.china.appstore/internal/config"
@@ -20,11 +21,12 @@ func Callpython() {
 		log.Println("------------------------------------------")
 		log.Println("[Routine] Running apple_download.py to getting latest downloadcount to csv")
 		log.Println("------------------------------------------")
-		//go func() {
-		// Run python
+
+		internal_time, _ := time.ParseDuration(os.Getenv("CRAWLER_INTERNAL_TIME"))
+
 		RunCommand("python3 /root/apple_download.py")
 		//}()
-		time.Sleep(300 * time.Second)
+		time.Sleep(time.Duration(internal_time))
 	}
 
 }

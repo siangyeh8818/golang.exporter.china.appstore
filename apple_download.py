@@ -22,6 +22,9 @@ from selenium.webdriver.common.by import By
 
 CHROMEDRIVER_PATH = './tools/chromedriver'
 
+account_apple = os.environ.get('APPLE_ACCOUNT')
+password_apple = os.environ.get('APPLE_PASSWORD')
+
 options = webdriver.ChromeOptions()
 options.add_argument('--headless')
 options.add_argument('--no-sandbox')
@@ -34,9 +37,9 @@ driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
 driver.get("https://www.ggkjplus.com/admin/#/login")
 time.sleep(2)
 driver.find_element(By.NAME, "mobile").click()
-driver.find_element(By.NAME, "mobile").send_keys("13053948149")
+driver.find_element(By.NAME, "mobile").send_keys(account_apple)
 driver.find_element(By.NAME, "pwd").click()
-driver.find_element(By.NAME, "pwd").send_keys("fHZPBE9fpKnup4r")
+driver.find_element(By.NAME, "pwd").send_keys(password_apple)
 driver.find_element(By.CSS_SELECTOR, ".over-btn > span").click()
 time.sleep(5)
 soup = BeautifulSoup(driver.page_source,"html.parser")

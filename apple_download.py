@@ -20,7 +20,7 @@ from selenium.webdriver.common.by import By
 # In[6]:
 
 
-CHROMEDRIVER_PATH = './tools/chromedriver'
+CHROMEDRIVER_PATH = '/usr/local/share/chromedriver'
 
 account_apple = os.environ.get('APPLE_ACCOUNT')
 password_apple = os.environ.get('APPLE_PASSWORD')
@@ -33,6 +33,7 @@ options.add_argument('blink-settings=imagesEnabled=false')
 options.add_argument('--enable-features=OverlayScrollbar')
 
 driver = webdriver.Chrome(executable_path=CHROMEDRIVER_PATH, options=options)
+driver.implicitly_wait(60)
 
 driver.get("https://www.ggkjplus.com/admin/#/login")
 time.sleep(2)
@@ -46,7 +47,7 @@ soup = BeautifulSoup(driver.page_source,"html.parser")
 driver.close()
 
 result = int(soup.find_all("div",class_="iCountUp num")[1].text.replace(",",""))
-print("balance: ",result)
+#print("balance: ",result)
 
 with open('output.csv', 'w', newline='') as csvfile:
     writer = csv.writer(csvfile)

@@ -20,7 +20,7 @@ RUN env GOOS=linux GOARCH=amd64 go build -o chinaappstore-exporter -v -ldflags "
 FROM centos:7
 COPY google.repo /etc/yum.repos.d/
 RUN yum update & yum install -y google-chrome-stable git epel-release https://centos7.iuscommunity.org/ius-release.rpm python36
-RUN pip3 install selenium
+RUN pip3 install selenium bs4
 #RUN apk --no-cache add bash bash-doc bash-completion ca-certificates libc6-compat
 
 # Run as root

@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
       - name: chinaappstore-exporter
-        image: siangyeh8818/golang.exporter.china.appstore:1.1
+        image: siangyeh8818/golang.exporter.china.appstore:1.2-05fb78
         imagePullPolicy: Always
         ports:
         - containerPort: 8081

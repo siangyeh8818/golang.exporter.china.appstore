@@ -46,7 +46,7 @@ time.sleep(5)
 soup = BeautifulSoup(driver.page_source,"html.parser")
 driver.close()
 
-result = int(soup.find_all("div",class_="iCountUp num")[1].text.replace(",",""))
+result = int(soup.find_all("div",class_="iCountUp num")[2].text.replace(",",""))
 #print("balance: ",result)
 
 with open('output.csv', 'w', newline='') as csvfile:
